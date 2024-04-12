@@ -45,7 +45,7 @@ configurations {
 }
 
 var serviceAccountCredentialsFile = File(rootProject.projectDir, "service_account_credentials.json")
-val abiName = mapOf("arm64-v8a" to "arm64")
+val abiName = mapOf("armeabi-v7a" to "arm32", "arm64-v8a" to "arm64")
 
 if (serviceAccountCredentialsFile.isFile) {
     setupPlay(Version.isStable)
@@ -159,9 +159,9 @@ android {
         create("release") {
             storeFile = File(projectDir, "config/release.keystore")
             gradleLocalProperties(rootDir, providers).apply {
-                storePassword = getProperty("RELEASE_STORE_PASSWORD", System.getenv("KEYSTORE_PASS"))
-                keyAlias = getProperty("RELEASE_KEY_ALIAS", System.getenv("ALIAS_NAME"))
-                keyPassword = getProperty("RELEASE_KEY_PASSWORD", System.getenv("ALIAS_PASS"))
+                storePassword = "test"
+                keyAlias = "test"
+                keyPassword = "test"
             }
 
             enableV3Signing = true
@@ -204,7 +204,7 @@ android {
         abi {
             isEnable = true
             reset()
-            include("arm64-v8a")
+            include("armeabi-v7a", "arm64-v8a")
         }
     }
 
